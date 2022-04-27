@@ -1,6 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `UD15`;
 USE `UD15`;
 
+/*----------------------------------------------------------------------------------------------------
+EJERCICIO 1
+------------------------------------------------------------------------------------------------------*/
+
 DROP TABLE IF EXISTS despachos;
 CREATE TABLE despachos (
   Numero int,
@@ -26,3 +30,32 @@ INSERT INTO directores VALUES ('99999999', 'Lorem ipsum', '22222222', 1), ('8888
 
 select * from despachos;
 select * from directores;
+
+/*----------------------------------------------------------------------------------------------------
+EJERCICIO 2
+------------------------------------------------------------------------------------------------------*/
+
+DROP TABLE IF EXISTS cientificos;
+CREATE TABLE cientificos (
+  DNI varchar(8),
+  NomApels nvarchar(255),
+  PRIMARY KEY (DNI)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS proyecto;
+CREATE TABLE proyecto (
+  ID char(4),
+  Nombre nvarchar(255),
+  Horas int,
+  PRIMARY KEY (ID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS asignado_a;
+CREATE TABLE asignado_a (
+  Cientifico varchar(8),
+  Proyecto char(4),
+  PRIMARY KEY (Cientifico,Proyecto),
+  FOREIGN KEY (Cientifico) REFERENCES cientificos(DNI),
+  FOREIGN KEY (Proyecto) REFERENCES proyecto(ID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
