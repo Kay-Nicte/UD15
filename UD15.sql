@@ -254,4 +254,88 @@ VALUES(1, 1, 1),
 EJERCICIO 5
 ------------------------------------------------------------------------------------------------------*/
 
+DROP TABLE IF EXISTS facultad;
+CREATE TABLE facultad (
+  Codigo int,
+  Nombre nvarchar(100),
+  PRIMARY KEY (Codigo)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO facultad
+VALUES(1, 'UB'),
+(2, 'URV'),
+(3, 'UJA'),
+(4, 'UCA'),
+(5, 'UPV'),
+(6, 'UAB'),
+(7, 'UOC'),
+(8, 'UNED'),
+(9, 'UCAM'),
+(10, 'Pompeu Fabra');
+
+DROP TABLE IF EXISTS equipos;
+CREATE TABLE equipos (
+  NumSerie char(4),
+  Nombre nvarchar(100),
+  Facultad int,
+  PRIMARY KEY (NumSerie),
+  FOREIGN KEY (Facultad) REFERENCES facultad(Codigo)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO equipos
+VALUES('0001', 'Alfa', 1),
+('0002', 'Bravo', 2),
+('0003', 'Charly', 3),
+('0004', 'Delta', 4),
+('0005', 'Foxtroit', 5),
+('0006', 'Golf', 6),
+('0007', 'Hotel', 7),
+('0008', 'India', 8),
+('0009', 'Juliet', 9),
+('0010', 'Kilo', 10);
+
+DROP TABLE IF EXISTS investigadores;
+CREATE TABLE investigadores (
+  DNI varchar(8),
+  NomApels nvarchar(255),
+  Facultad int,
+  PRIMARY KEY (DNI),
+  FOREIGN KEY (Facultad) REFERENCES facultad(codigo)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO investigadores
+VALUES(1, 'Juan Gabriel García López', 1), 
+(2, 'Jacinto Rey Grande', 2), 
+(3, 'Elena Nito del Bosque', 3), 
+(4, 'Marías Queroso', 4), 
+(5, 'Armando Bronca Segura', 5), 
+(6, 'Eva Fina Segura', 6), 
+(7, 'Armando Líos', 7), 
+(8, 'Rosa Blanco Rojo', 8), 
+(9, 'Dolores Fuertes de Barriga', 9), 
+(10,'Zacarías Flores del Campo', 10);
+
+DROP TABLE IF EXISTS reserva;
+CREATE TABLE reserva (
+  DNI varchar(8),
+  NumSerie char(4),
+  Comienzo datetime,
+  Fin datetime,
+  PRIMARY KEY (DNI,NumSerie),
+  FOREIGN KEY (DNI) REFERENCES investigadores(DNI),
+  FOREIGN KEY (NumSerie) REFERENCES equipos(NumSerie)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+SET FOREIGN_KEY_CHECKS=0;
+INSERT INTO reserva
+VALUES('11111111', '0001', '2013-09-23', '2013-09-26'),
+('22222222', '0002', '2014-01-07', '2014-01-18'),
+('33333333', '0003', '2014-07-01', '2014-08-24'),
+('44444444', '0004', '2014-12-21', '2015-01-3'),
+('55555555', '0005', '2015-02-21', '2015-03-10'),
+('66666666', '0006', '2015-08-5', '2015-08-10'),
+('77777777', '0007', '2015-09-14', '2015-09-22'),
+('88888888', '0008', '2015-10-12', '2015-10-29'),
+('99999999', '0009', '2016-02-14', '2016-09-22'),
+('00000000', '0010', '2019-01-1', '2020-04-6');
+SET FOREIGN_KEY_CHECKS=1;
